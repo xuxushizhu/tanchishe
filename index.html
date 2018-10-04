@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+				margin: 0 auto;
+			}
+			#youxi{
+				height: 400px;
+				width: 400px;
+				border:1px solid black ;
+				position: relative;
+				margin: 0;
+			}
+			#box{
+				height: 8px;
+				width: 8px;
+				background: green;
+				position: absolute;
+				
+			}
+			
+			.she{
+				height: 8px;
+				width: 8px;
+				background: greenyellow;
+				position: absolute;
+				left: 192px;
+				top:20px;
+				border:1px solid #000000;
+			}
+		</style>
+	</head>
+	<script src="jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+	<body>
+		<div id="youxi">
+			
+			<div id="box" class="she">
+		
+		</div>
+		<div class="she">
+			
+		</div>
+		<div class="she">
+			
+		</div>
+		<div class="she">
+			
+		</div>
+		<div class="she">
+			
+		</div>
+		<div class="she">
+			
+		</div>
+		<div class="she">
+			
+		</div>
+		<div class="she">
+			
+		</div>
+			
+			
+		</div>
+		
+		
+		
+		
+		
+		<script type="text/javascript">
+			$(function(){
+				
+				var arr = [["200px","20px"]]
+				$("#box").css({"left":arr[0][0],"top":arr[0][1]})
+				console.log(arr[0][0])
+				
+				
+			
+				function snake(){
+					//随机食物坐标
+					var _x = parseInt(400*Math.random())+"px"
+					var _y = parseInt(400*Math.random())+"px"
+					$("body").append($("<div id='box1'></div>").css({
+						"height":"8px",
+						"width":"8px",
+						"background":"red",
+						"position":"absolute",
+						"left":_x,
+						"top":_y
+					}))
+				}
+				snake()
+	        var odiv = document.getElementById("box")
+			var odiv1 = document.getElementById('box1')	
+			var she = document.getElementsByClassName("she")
+//			console.log(she[1])
+				
+				
+			document.onkeydown = function (e){
+				
+					for(var i = she.length - 1; i>=1; i--){
+						she[i].style.left = she[i-1].style.left;
+						she[i].style.top = she[i-1].style.top;
+					}
+				
+				
+				if($("#box1").length<1){  //判断页面上有没有虫子  如果没有重新生成
+					snake()
+				 	odiv = document.getElementById("box")
+					odiv1 = document.getElementById('box1')
+				}
+				var evt = e||event
+				var kod =evt.keyCode  //定义一个变量保存键盘码
+				if(kod == 39){
+					odiv.style.left = odiv.offsetLeft+ 5+"px"  //控制往右
+				}if(kod == 40){
+					odiv.style.top = odiv.offsetTop+ 5+"px"   //控制往下
+				}if(kod == 38){
+					odiv.style.top = odiv.offsetTop- 5+"px"   //控制往上
+				}if(kod == 37){
+					odiv.style.left = odiv.offsetLeft- 5+"px"   //控制往左
+				}
+					var t1 = odiv.offsetTop;  
+                	var l1 = odiv.offsetLeft;                       
+               		var r1 = odiv.offsetLeft + odiv.offsetWidth;  
+              		var b1 = odiv.offsetTop + odiv.offsetHeight;  
+  
+                	var t2 = odiv1.offsetTop;  
+               		var l2 = odiv1.offsetLeft;  
+              		var r2 = odiv1.offsetLeft + odiv1.offsetWidth;  
+              		var b2 = odiv1.offsetTop + odiv1.offsetHeight;  
+              	console.log(odiv.offsetTop,odiv.offsetLeft)
+                if(b1<t2 || l1>r2 || t1>b2 || r1<l2){// 表示没碰上  
+  					odiv1.style.background = 'red'; 
+                }else{  
+              		$("#box1").remove()     //吃到虫子删除虫子
+              		$("body").append("<div class='she'></div>");
+//                  odiv1.style.background = 'blue';  
+                } 
+			}
+
+			
+			
+			
+				
+			})
+			
+		</script>
+	</body>
+</html>
